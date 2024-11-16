@@ -145,23 +145,26 @@
                 </div>
             </div>
 
+            //ดึงข้อมูลจาก database
+            @php
+                $adminData = App\Models\User::findOrFail(Auth::user()->id);
+            @endphp
+
+
             <div class="dropdown d-inline-block user-dropdown">
                 <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img class="rounded-circle header-profile-user"
-                        src="{{ asset('backend/assets/images/users/avatar-1.jpg') }}" alt="Header Avatar">
-                    <span class="d-none d-xl-inline-block ms-1">Julia</span>
+                    src="{{empty($adminData->photo)? asset('uploads/no_image.png') : asset('uploads/admin_profiles/'.$adminData->photo)}}" alt="Header Avatar">
+                    <span class="d-none d-xl-inline-block ms-1">{{ $adminData->name }}</span>
                     <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
                     <!-- item-->
                     <a class="dropdown-item" href="{{ route('admin.profile') }}"><i
                             class="align-middle ri-user-line me-1"></i> Profile</a>
-
-                    {{--  <a class="dropdown-item" href="#"><i class="align-middle ri-wallet-2-line me-1"></i> My Wallet</a>  --}}
                     <a class="dropdown-item d-block" href="{{ route('admin.password.change') }}"><i
                             class="ri-settings-2-line align-middle me-1"></i> Change Password</a>
-                    {{--  <a class="dropdown-item" href="#"><i class="align-middle ri-lock-unlock-line me-1"></i> Lock screen</a>  --}}
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="{{ route('admin.logout') }}"><i
                             class="align-middle ri-shut-down-line me-1 text-danger"></i> Logout</a>

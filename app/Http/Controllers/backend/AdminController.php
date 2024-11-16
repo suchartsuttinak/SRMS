@@ -7,8 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
-
+use Illuminate\Support\Facades\Hash;
 
 
 class AdminController extends Controller
@@ -62,5 +61,32 @@ class AdminController extends Controller
        
        
     } // End method
-            
+       public function AdminPasswordUpdate(Request $request){
+            $request->validate([
+                'old_password' => 'required',
+                'new_password' => 'required|confirmed'
+        ]);
+
+        if (!Hash::check($request->old_password, Auth::user()->password)) {
+            // toastr Alert Message
+        $notification = array(
+            'message' => 'รหัสไม่ถูกต้อง !',
+            'alert-type' => 'error'
+        );
+        // toastr Alert Message
+        return redirect()->back()->with($notification);
+        }
+
+        User::whereId(Auth::user()->id)->update([
+            'password' => Hash::make($request->new_password)
+        ]);
+// toastr Alert Message
+        $notification = array(
+            'message' => 'เปลี่ยนรหัสเป็นที่เรียบร้อย !',
+            'alert-type' => 'success'
+        );
+        // toastr Alert Message
+        return redirect()->back()->with($notification);
+        
+       }   
 }

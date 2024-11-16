@@ -25,13 +25,13 @@
    <div class="card">
     <div class="card-body">
         <h4 class="card-title">ADMIN PASSWORD UPDATE</h4>
-    <form action="" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.password.update') }}" method="POST">
         @csrf
         <div class="row mb-3">
-            <label for="example-text-input" class="col-sm-2 col-form-label">Ole Password</label>
+            <label for="example-text-input" class="col-sm-2 col-form-label">Old Password</label>
             <div class="col-sm-10">
-                <input class="form-control @error('ole_password') is-invalid @enderror" name="ole_password" type="text" placeholder="Ole Password">
-                    @error('ole_password')
+                <input class="form-control @error('old_password') is-invalid @enderror" name="old_password" type="text" placeholder="Old Password">
+                    @error('old_password')
                     <span class="text-danger">{{ $message }}</span>  
                     @enderror
             </div>
@@ -50,12 +50,12 @@
         <div class="row mb-3">
             <label for="example-text-input" class="col-sm-2 col-form-label">Confirm New Password</label>
             <div class="col-sm-10">
-                <input class="form-control name="new_password_confirmation" type="password" placeholder="New_Password">
+                <input class="form-control" name="new_password_confirmation" type="password" placeholder="Confirm_New_Password">
             </div>
         </div>
         <!-- end row -->
-
-        <button type="submit" class="btn btn-primary btn-rounded waves-effect waves-light">Change Password</button>
+       
+        <button type="submit" class="btn btn-primary btn-rounded waves-effect waves-light">Update Password</button>
     </div>
 </form>
 
